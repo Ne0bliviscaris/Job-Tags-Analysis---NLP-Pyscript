@@ -1,17 +1,90 @@
+import re
 from io import StringIO
 
 import pandas as pd
 from js import document
 from pyodide.http import pyfetch
 
-import pyscript
 from pyscript import display
 
 
 async def main_app():
     """Main app logic."""
     df = await load_csv()
+    text_block("Raw DataFrame", before_id="display_data")
     display(df, target="display_data")
+
+    cleaned_df = clean_data(df)
+    if cleaned_df is not None:
+        display(cleaned_df, target="display_cleaned_data")
+        text_block("Processed DataFrame", before_id="display_cleaned_data")
+
+
+def clean_data(df):
+    """Return DataFrame with cleaned 'title' and 'tags' columns."""
+    df = df.copy()
+    df["title"] = df["title"].apply(clean_titles)
+    df["tags"] = df["tags"].apply(clean_tags)
+    return df
+
+
+def text_block(section_title: str, paragraph_text: str = None, before_id: str = None):
+    """Create a new div with header and optional paragraph side by side."""
+    block = document.createElement("div")
+    block.className = "description"
+    h3 = document.createElement("h3")
+    h3.className = "header"
+    h3.innerText = section_title
+    block.appendChild(h3)
+    if paragraph_text:
+        p = document.createElement("p")
+        p.className = "paragraph"
+        p.innerText = paragraph_text
+        block.appendChild(p)
+    parent_block = document.querySelector(".container")
+    if before_id:
+        described_block = document.getElementById(before_id)
+        parent_block.insertBefore(block, described_block)
+    else:
+        parent_block.appendChild(block)
+
+
+def clean_tags(tags_string):
+    """Clean tags string: lowercase, remove digits, punctuation, extra spaces."""
+    if not isinstance(tags_string, str):
+        return ""
+    tags = [tag.strip() for tag in tags_string.split(" | ")]
+    cleaned_tags = []
+
+    digits = r"\d+"
+    punctuation = r"[^\w\s]"
+    whitespace = r"\s+"
+
+    for tag in tags:
+        tag = tag.lower()
+        tag = re.sub(digits, "", tag)
+        tag = re.sub(punctuation, "", tag)
+        tag = re.sub(whitespace, " ", tag)
+        tag = tag.strip()
+        if tag:
+            cleaned_tags.append(tag)
+    unique_tags = list(dict.fromkeys(cleaned_tags))
+    return " | ".join(unique_tags)
+
+
+def clean_titles(title):
+    """Clean title string: lowercase, remove digits, punctuation, extra spaces."""
+    digits = r"\d+"
+    punctuation = r"[^\w\s]"
+    whitespace = r"\s+"
+
+    title = title.lower()
+    title = re.sub(digits, "", title)
+    title = re.sub(punctuation, "", title)
+    title = re.sub(whitespace, " ", title)
+    if title.endswith("nowa"):
+        title = title[:-4]
+    return title.strip()
 
 
 async def load_csv():
