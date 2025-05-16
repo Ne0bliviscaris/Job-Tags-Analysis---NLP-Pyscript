@@ -1,19 +1,29 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analiza tagów ofert pracy</title>
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- PyScript CSS -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2025.3.1/core.css">
     <link rel="stylesheet" href="styles.css">
+    <!-- This script tag bootstraps PyScript -->
+    <script type="module" src="https://pyscript.net/releases/2025.3.1/core.js"></script>
 </head>
+
 <body>
     <div class="container">
-        <h1>Analiza tagów ofert pracy</h1>
-        <div id="visualizations">
-            <div py-mount="tag-chart"></div>
+        <h1>Job tags analysis</h1>
+        <h2>from <a href="https://github.com/Ne0bliviscaris/Job-Search-Tool" target="_blank">Job Search Tool</a></h2>
+        
+        
+        <div id="app_loader">
+            <div class="loading-animation">
+                <div class="spinner"></div>   
+            <p>Loading PyScript application... Please wait.</p>
+            </div>
+            <py-script src="./scripts/app_loader.py"/>
         </div>
+
     </div>
 
     <py-config>
