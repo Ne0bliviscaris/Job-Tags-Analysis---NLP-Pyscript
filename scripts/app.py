@@ -15,9 +15,8 @@ async def main_app():
     display(df, target="display_data")
 
     cleaned_df = clean_data(df)
-    if cleaned_df is not None:
-        display(cleaned_df, target="display_cleaned_data")
-        text_block("Processed DataFrame", before_id="display_cleaned_data")
+    display(cleaned_df, target="display_cleaned_data")
+    text_block("Processed DataFrame", before_id="display_cleaned_data")
 
 
 def clean_data(df):
