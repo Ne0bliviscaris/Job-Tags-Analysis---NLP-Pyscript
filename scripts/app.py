@@ -10,11 +10,10 @@ from pyscript import display
 block_id = "app_loader"
 
 
-def clear_loader():
-    """Czyści kontener animacji bez usuwania jego struktury"""
-    loading_animation = document.querySelector(f"#{block_id} .loading-animation")
-    loading_animation.innerHTML = ""
-    return loading_animation
+async def main_app():
+    """Main app logic."""
+    data = await load_csv()
+    display(data, target="display_data")
 
 
 async def load_csv():
@@ -26,10 +25,11 @@ async def load_csv():
     return pd.read_csv(StringIO(text))
 
 
-async def main_app():
-    """Main app logic."""
-    data = await load_csv()
-    display(data)
+def clear_loader():
+    """Clear the loading indicator."""
+    loading_animation = document.querySelector(f"#{block_id} .loading-animation")
+    loading_animation.innerHTML = ""
+    return loading_animation
 
 
 async def load_app():
