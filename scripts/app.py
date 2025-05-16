@@ -1,9 +1,10 @@
 import re
+from collections import Counter
 from io import StringIO
 
 import pandas as pd
 from js import document
-from pyodide.http import pyfetch
+from pyodide.http import pyfetch  # type: ignore
 
 from pyscript import display
 
@@ -11,12 +12,14 @@ from pyscript import display
 async def main_app():
     """Main app logic."""
     df = await load_csv()
-    text_block("Raw DataFrame", before_id="display_data")
+    raw_tokens = count_tokens_in_df(df)
+    text_block("Raw DataFrame", f"{raw_tokens} tokens", before_id="display_data")
     display(df, target="display_data")
 
     cleaned_df = clean_data(df)
+    cleaned_tokens = count_tokens_in_df(cleaned_df)
     display(cleaned_df, target="display_cleaned_data")
-    text_block("Processed DataFrame", before_id="display_cleaned_data")
+    text_block("\n\nProcessed DataFrame", f"{cleaned_tokens} tokens", before_id="display_cleaned_data")
 
 
 def clean_data(df):
@@ -25,6 +28,24 @@ def clean_data(df):
     df["title"] = df["title"].apply(clean_titles)
     df["tags"] = df["tags"].apply(clean_tags)
     return df
+
+
+def count_tokens_in_df(df: pd.DataFrame) -> pd.Series:
+    """Count tokens from 'title' and 'tags' columns in a DataFrame."""
+    all_tokens = []
+    for title in df["title"]:
+        if isinstance(title, str):
+            all_tokens.extend(title.split())
+
+    for tags_string in df["tags"]:
+        if isinstance(tags_string, str) and tags_string:
+            tags_list = [tag.strip() for tag in tags_string.split(" | ")]
+            for tag_phrase in tags_list:
+                all_tokens.extend(tag_phrase.split())
+
+    token_counts = Counter(all_tokens)
+    total_tokens = sum(token_counts.values())
+    return total_tokens
 
 
 def text_block(section_title: str, paragraph_text: str = None, before_id: str = None):
