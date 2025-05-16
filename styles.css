@@ -47,3 +47,32 @@ body {
     margin: 0;
     padding-top: auto;
 }
+#github-link {
+    position: fixed;
+    width: 70px;
+    text-align: center;
+    top: 16px;
+    right: 24px;
+    background: #222;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    z-index: 1000;
+}
+
+#linkedin-link {
+    position: fixed;
+    width: 70px;
+    text-align: center;
+    top: 56px;
+    right: 24px;
+    background: #222;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    z-index: 1000;
+}

@@ -11,6 +11,9 @@
 </head>
 
 <body>
+    <a href="https://github.com/Ne0bliviscaris/Job-Tags-Analysis---NLP-Pyscript" target="_blank" id="github-link">GitHub</a>
+    <a href="https://www.linkedin.com/in/mateusz-ratajczak-/" target="_blank" id="linkedin-link">LinkedIn</a>
+
     <div class="container">
         <h1>Job tags analysis</h1>
         <h2>from <a href="https://github.com/Ne0bliviscaris/Job-Search-Tool" target="_blank">Job Search Tool</a></h2>
@@ -19,14 +22,15 @@
             <div class="loading-animation">
                 <div class="spinner"></div>   
             <p>Loading PyScript application... Please wait.</p>
-            </div>
             <py-script src="./scripts/app_loader.py"/>
+            </div>
         </div>
 
     </div>
 
     <py-config>
         <!-- packages = ["pandas", "matplotlib", "nltk", "wordcloud"] -->
+        packages = ["pandas"]
     </py-config>
 
     <py-script src="./scripts/main.py"></py-script>
