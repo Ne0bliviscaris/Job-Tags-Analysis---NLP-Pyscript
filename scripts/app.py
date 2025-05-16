@@ -115,7 +115,7 @@ def clear_block(block_id="#processing_block"):
     Default = #processing_block"""
     container = document.getElementById(block_id)
     if container:
-        container.innerHTML = ""
+        container.remove()
 
 
 async def load_app():
