@@ -18,19 +18,20 @@
         <h1>Job tags analysis</h1>
         <h2>from <a href="https://github.com/Ne0bliviscaris/Job-Search-Tool" target="_blank">Job Search Tool</a></h2>
         
+        <!-- App loader -->
         <div id="app_loader">
-            <!-- Loading animation -->
             <div class="loading-animation">
-                <div class="spinner"></div>   
-            <p>Loading PyScript application... Please wait.</p>
-            <py-script src="./scripts/app.py"/>
+                <div class="spinner"></div>
+                <p>Loading PyScript application... Please wait.</p>
+                
             </div>
-
-            <!-- Main app -->
-            <div id = "display_data" />
         </div>
-
+        <!-- Main app script -->
+        <py-script src="./scripts/app.py"></py-script>
+        <!-- Display dataframe -->
+        <div id="display_data"></div>
     </div>
+ 
 
     <py-config>
         <!-- packages = ["pandas", "matplotlib", "nltk", "wordcloud"] -->
