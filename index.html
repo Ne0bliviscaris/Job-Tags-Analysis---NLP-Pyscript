@@ -27,18 +27,13 @@
             </div>
         </div>
         <!-- Main app script -->
-        <py-script src="./scripts/app.py"></py-script>
+        <py-script src="./scripts/app.py" config = ./scripts/pyscript.toml></py-script>
         <!-- Display dataframe -->
         <div id="display_data"></div>
         <!-- Display cleaned dataframe -->
         <div id="display_cleaned_data"></div>
     </div>
  
-
-    <py-config>
-        <!-- packages = ["pandas", "matplotlib", "nltk", "wordcloud"] -->
-        packages = ["pandas"]
-    </py-config>
     
 </body>
 </html>
